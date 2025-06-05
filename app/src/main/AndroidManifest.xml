@@ -5,7 +5,9 @@
         android:allowBackup="false"
         android:label="VaultSafe Mobile"
         android:theme="@style/Theme.VaultSafeMobile">
-        <activity android:name=".WelcomeActivity">
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
