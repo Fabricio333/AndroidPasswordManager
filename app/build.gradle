@@ -3,9 +3,13 @@ plugins {
     id 'kotlin-android'
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 android {
     namespace 'com.vaultsafe.mobile'
-    compileSdkVersion 34
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.vaultsafe.mobile"
