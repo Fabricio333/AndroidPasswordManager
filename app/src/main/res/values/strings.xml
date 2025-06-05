@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SecurePass</string>
+    <string name="welcome_generate">Generate New Seed</string>
+    <string name="welcome_recover">Recover with Seed Phrase</string>
+    <string name="backup_instruction">Back up your phrase</string>
+    <string name="written_down_confirm">I've written it down</string>
+    <string name="proceed_message">You may proceed</string>
+    <string name="seed_prompt">Seed Phrase</string>
+    <string name="continue_button">Continue</string>
+    <string name="private_key_label">Private Key</string>
+    <string name="email_label">Email</string>
+    <string name="site_label">Site</string>
+    <string name="nonce_label">Nonce</string>
+    <string name="derive_password">Derive Password</string>
+    <string name="derived_password">Password: %1$s</string>
+    <string name="copy_clipboard">Copy to Clipboard</string>
+    <string name="copied_toast">Copied</string>
+    <string name="save_key">Save Key</string>
+    <string name="key_stored">Key stored securely</string>
+    <string name="verify_button">Verify</string>
+    <string name="word1_label">Word #1</string>
+    <string name="use_biometrics">Use Biometrics</string>
+    <string name="unlock_title">Unlock</string>
+    <string name="cancel">Cancel</string>
+    <string name="invalid_seed">Invalid seed</string>
+    <string name="valid_seed">Seed valid</string>
+</resources>

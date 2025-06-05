@@ -18,7 +18,9 @@ import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import com.vaultsafe.mobile.utils.CryptoUtils
+import com.vaultsafe.mobile.data.KeyManager
 
 class ManagementActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,28 +37,37 @@ class ManagementActivity : ComponentActivity() {
 
 @Composable
 fun ManagementScreen() {
-    var privateKey by remember { mutableStateOf("") }
+    val context = LocalContext.current
+    val storedKey = remember { KeyManager.getPrivateKey(context) }
+    var privateKey by remember { mutableStateOf(storedKey ?: "") }
     var email by remember { mutableStateOf("") }
     var site by remember { mutableStateOf("") }
     var nonce by remember { mutableStateOf("0") }
     var password by remember { mutableStateOf("") }
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
-    val context = LocalContext.current
 
     Column(modifier = Modifier.padding(16.dp)) {
-        TextField(value = privateKey, onValueChange = { privateKey = it }, label = { Text("Private Key") })
-        TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
-        TextField(value = site, onValueChange = { site = it }, label = { Text("Site") })
-        TextField(value = nonce, onValueChange = { nonce = it }, label = { Text("Nonce") })
+        TextField(value = privateKey, onValueChange = { privateKey = it }, label = { Text(stringResource(id = R.string.private_key_label)) })
+        TextField(value = email, onValueChange = { email = it }, label = { Text(stringResource(id = R.string.email_label)) })
+        TextField(value = site, onValueChange = { site = it }, label = { Text(stringResource(id = R.string.site_label)) })
+        TextField(value = nonce, onValueChange = { nonce = it }, label = { Text(stringResource(id = R.string.nonce_label)) })
         Button(onClick = {
             val input = "$privateKey/$email/$site/$nonce"
             val hash = CryptoUtils.sha256(input)
             password = "PASS" + hash.take(16) + "249+"
-        }) { Text("Derive Password") }
-        Text("Password: $password")
+        }) { Text(stringResource(id = R.string.derive_password)) }
+        Text(stringResource(id = R.string.derived_password, password))
         Button(onClick = {
             clipboardManager.setText(androidx.compose.ui.text.AnnotatedString(password))
             Toast.makeText(context, "Copied", Toast.LENGTH_SHORT).show()
-        }) { Text("Copy to Clipboard") }
+        }) { Text(stringResource(id = R.string.copy_clipboard)) }
+        if (!KeyManager.hasKey(context)) {
+            Button(onClick = {
+                KeyManager.savePrivateKey(context, privateKey)
+                Toast.makeText(context, "Key saved securely", Toast.LENGTH_SHORT).show()
+            }) { Text(stringResource(id = R.string.save_key)) }
+        } else {
+            Text(stringResource(id = R.string.key_stored))
+        }
     }
 }
