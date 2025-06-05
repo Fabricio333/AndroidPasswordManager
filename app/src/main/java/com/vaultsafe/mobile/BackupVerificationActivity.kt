@@ -13,6 +13,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 
 class BackupVerificationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,7 @@ class BackupVerificationActivity : ComponentActivity() {
 fun VerificationScreen() {
     var word1 by remember { mutableStateOf("") }
     Column {
-        TextField(value = word1, onValueChange = { word1 = it }, label = { Text("Word #1") })
-        Button(onClick = {}) { Text("Verify") }
+        TextField(value = word1, onValueChange = { word1 = it }, label = { Text(stringResource(id = R.string.word1_label)) })
+        Button(onClick = {}) { Text(stringResource(id = R.string.verify_button)) }
     }
 }

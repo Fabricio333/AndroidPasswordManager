@@ -15,7 +15,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.vaultsafe.mobile.utils.Bip39Utils
+import com.vaultsafe.mobile.data.KeyManager
 
 class GenerateActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,15 +37,19 @@ class GenerateActivity : ComponentActivity() {
 @Composable
 fun GenerateScreen(mnemonic: String) {
     val writtenDown = remember { mutableStateOf(false) }
+    val context = LocalContext.current
     Column(modifier = Modifier.padding(16.dp)) {
         Text(text = mnemonic)
         if (!writtenDown.value) {
-            Text("Back up your phrase")
-            Button(onClick = { writtenDown.value = true }) {
-                Text("I've written it down")
+            Text(stringResource(id = R.string.backup_instruction))
+            Button(onClick = {
+                writtenDown.value = true
+                KeyManager.savePrivateKey(context, mnemonic)
+            }) {
+                Text(stringResource(id = R.string.written_down_confirm))
             }
         } else {
-            Text("You may proceed")
+            Text(stringResource(id = R.string.proceed_message))
         }
     }
 }
