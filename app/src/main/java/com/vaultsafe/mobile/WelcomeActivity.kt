@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 
 class WelcomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class WelcomeActivity : ComponentActivity() {
 @Composable
 fun WelcomeScreen(onGenerate: () -> Unit, onRecover: () -> Unit) {
     Column {
-        Button(onClick = onGenerate) { Text("Generate New Seed") }
-        Button(onClick = onRecover) { Text("Recover with Seed Phrase") }
+        Button(onClick = onGenerate) { Text(stringResource(id = R.string.welcome_generate)) }
+        Button(onClick = onRecover) { Text(stringResource(id = R.string.welcome_recover)) }
     }
 }
