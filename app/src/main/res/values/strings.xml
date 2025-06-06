@@ -11,6 +11,7 @@
     <string name="email_label">Email</string>
     <string name="site_label">Site</string>
     <string name="nonce_label">Nonce</string>
+    <string name="nonce_auto_label">Nonce (auto)</string>
     <string name="derive_password">Derive Password</string>
     <string name="derived_password">Password: %1$s</string>
     <string name="copy_clipboard">Copy to Clipboard</string>
@@ -19,7 +20,6 @@
     <string name="key_stored">Key stored securely</string>
     <string name="key_loaded">Key loaded</string>
     <string name="nonce_updated">Nonce updated to %1$d</string>
-    <string name="nonce_auto_label">Nonce (auto)</string>
     <string name="wordlist_error">Word list not loaded</string>
     <string name="verify_button">Verify</string>
     <string name="word1_label">Word #1</string>
@@ -29,3 +29,4 @@
     <string name="invalid_seed">Invalid seed</string>
     <string name="valid_seed">Seed valid</string>
 </resources>
+

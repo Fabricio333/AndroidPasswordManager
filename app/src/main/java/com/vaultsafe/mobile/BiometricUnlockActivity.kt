@@ -1,6 +1,7 @@
 package com.vaultsafe.mobile
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.biometric.BiometricPrompt
@@ -24,7 +25,7 @@ class BiometricUnlockActivity : ComponentActivity() {
             MaterialTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     BiometricScreen(onUnlock = {
-                        // TODO load and decrypt key
+                        // TODO: Load and decrypt key after authentication
                     })
                 }
             }
@@ -34,22 +35,17 @@ class BiometricUnlockActivity : ComponentActivity() {
 
 @Composable
 fun BiometricScreen(onUnlock: () -> Unit) {
+    val context = LocalContext.current
     Column {
-        val context = LocalContext.current
         Button(onClick = {
             val prompt = BiometricHelper.createPrompt(context as androidx.fragment.app.FragmentActivity) {
                 onUnlock()
                 val key = KeyManager.getPrivateKey(context)
-                android.widget.Toast.makeText(context, context.getString(R.string.key_loaded), android.widget.Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, stringResource(id = R.string.key_loaded), Toast.LENGTH_SHORT).show()
             }
-            prompt.authenticate(
-                BiometricPrompt.PromptInfo.Builder()
-                    .setTitle(stringResource(id = R.string.unlock_title))
-                    .setNegativeButtonText(stringResource(id = R.string.cancel))
-                    .build()
-            )
+            BiometricHelper.showBiometricPrompt(prompt)
         }) {
-            Text(stringResource(id = R.string.use_biometrics))
+            Text(text = stringResource(id = R.string.unlock_with_biometrics))
         }
     }
 }
