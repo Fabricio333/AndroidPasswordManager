@@ -23,6 +23,7 @@ import com.vaultsafe.mobile.data.KeyManager
 class GenerateActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Bip39Utils.loadWordlist(this)
         val mnemonic = Bip39Utils.generateMnemonic()
         setContent {
             MaterialTheme {

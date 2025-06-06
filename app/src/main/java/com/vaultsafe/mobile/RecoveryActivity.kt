@@ -23,6 +23,7 @@ import com.vaultsafe.mobile.data.KeyManager
 class RecoveryActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Bip39Utils.loadWordlist(this)
         setContent {
             MaterialTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
