@@ -1,6 +1,7 @@
 package com.vaultsafe.mobile
 
 import android.os.Bundle
+import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.biometric.BiometricPrompt
@@ -13,7 +14,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.vaultsafe.mobile.utils.BiometricHelper
+import com.vaultsafe.mobile.data.KeyManager
 
 class BiometricUnlockActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +25,7 @@ class BiometricUnlockActivity : ComponentActivity() {
             MaterialTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     BiometricScreen(onUnlock = {
-                        // TODO load and decrypt key
+                        startActivity(Intent(this@BiometricUnlockActivity, ManagementActivity::class.java))
                     })
                 }
             }
@@ -37,15 +40,17 @@ fun BiometricScreen(onUnlock: () -> Unit) {
         Button(onClick = {
             val prompt = BiometricHelper.createPrompt(context as androidx.fragment.app.FragmentActivity) {
                 onUnlock()
+                val key = KeyManager.getPrivateKey(context)
+                android.widget.Toast.makeText(context, context.getString(R.string.key_loaded), android.widget.Toast.LENGTH_SHORT).show()
             }
             prompt.authenticate(
                 BiometricPrompt.PromptInfo.Builder()
-                    .setTitle("Unlock")
-                    .setNegativeButtonText("Cancel")
+                    .setTitle(stringResource(id = R.string.unlock_title))
+                    .setNegativeButtonText(stringResource(id = R.string.cancel))
                     .build()
             )
         }) {
-            Text("Use Biometrics")
+            Text(stringResource(id = R.string.use_biometrics))
         }
     }
 }
